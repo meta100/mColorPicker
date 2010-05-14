@@ -417,12 +417,12 @@ mColorPicker = {
       if ($(this).attr('text') == 'hidden') {
   
         var color = $(this).val(),
-          width = ($(this).width() > 0)? $(this).width(): parseInt($(this).css('width'));
-          height = ($(this).height())? $(this).height(): parseInt($(this).css('height'));
-          flt = $(this).css('float'),
-          image = (color == 'transparent')? "url('" + mColorPicker.imageUrl + "/grid.gif')": '',
-          textColor = (color == 'transparent')? "#000000": mColorPicker.textColor(color),
-          colorPicker = '';
+            width = ($(this).width() > 0)? $(this).width(): parseInt($(this).css('width'));
+            height = ($(this).height())? $(this).height(): parseInt($(this).css('height'));
+            flt = $(this).css('float'),
+            image = (color == 'transparent')? "url('" + mColorPicker.imageUrl + "/grid.gif')": '',
+            textColor = (color == 'transparent')? "#000000": mColorPicker.textColor(color),
+            colorPicker = '';
     
         $('body').append('<span id="color_work_area"></span>');
         $('span#color_work_area').append($(this).clone(true));
@@ -442,11 +442,19 @@ mColorPicker = {
         updateInput = true;
       } else {
   
-        var color = $(this).val()
-          image = (color == 'transparent')? "url('" + mColorPicker.imageUrl + "/grid.gif')": '',
-          textColor = (color == 'transparent')? "#000000": mColorPicker.textColor(color);
+        var color = $(this).val(),
+            id = $(this).attr('id'),
+            image = (color == 'transparent')? "url('" + mColorPicker.imageUrl + "/grid.gif')": '',
+            textColor = (color == 'transparent')? "#000000": mColorPicker.textColor(color),
+            colorPicker = '';
     
-        $(this).css({
+        $('body').append('<span id="color_work_area"></span>');
+        $('span#color_work_area').append($(this).clone(true));
+        colorPicker = $('span#color_work_area').html().replace(/type=[^a-z]*color[^a-z]*/gi, 'type="text"');
+        $('span#color_work_area').html('').remove();
+        $(this).after(colorPicker).remove();   
+
+        $('#' + id).css({
           'background-color': color,
           'background-image': image,
           'color' : textColor

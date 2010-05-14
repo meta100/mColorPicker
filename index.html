@@ -5,49 +5,19 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <script charset="UTF-8" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js" type="text/javascript"></script>
     <script type="text/javascript" src="javascripts/mColorPicker.js"></script>
-    <script type="text/javascript">
-      function random_color() {
-      
-        var color = Math.round(0xffffff * Math.random());
-        return ('#0' + color.toString(16)).replace(/^#0([0-9a-f]{6})$/i, '#$1');
-      }
-
-      $('input').filter(function(index) {
-    
-        return this.getAttribute("type") == 'color';
-      }).each(function () {
-
-        $(this).val(random_color());
-      });
-    </script>
 	</head>
 	<body>
     <p>
-      <input type="color" name="color1" value="#fff467">
+      <input type="color" name="color1" value="#ff0667" class="color">
     </p>
 
     <p>
-      <input type="color" name="color2" value="#ff0">
+      <input type="color" name="color2" value="#ff0" class="color">
     </p>
 
     <p>
-      <input type="color" id="color3" text="hidden" style="height:20px;width:20px;" value="#f7941d">
-      <input type="color" text="hidden" style="height:20px;width:20px;" value="#a36209">
+      <input type="color" id="color3" text="hidden" style="height:20px;width:20px;" value="#f7941d" class="color">
+      <input type="color" text="hidden" style="height:20px;width:20px;" value="#a36209" class="color">
     </p>
 	</body>
-  <script type="text/javascript">
-    function random_color() {
-    
-      var color = Math.round(0xffffff * Math.random());
-      return ('#0' + color.toString(16)).replace(/^#0([0-9a-f]{6})$/i, '#$1');
-    }
-
-    $('input').filter(function(index) {
-  
-      return this.getAttribute("type") == 'color';
-    }).each(function () {
-
-      $(this).val(random_color());
-    });
-  </script>
 </html>
