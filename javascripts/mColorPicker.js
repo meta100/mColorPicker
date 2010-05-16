@@ -35,7 +35,7 @@ mColorPicker = {
   current_color: false,
   current_value: false,
   color: false,
-  imageUrl: 'images/',
+  imageUrl: 'images/', //Change if you want to use local images.
   swatches: ["#ffffff","#ffff00","#00ff00","#00ffff","#0000ff","#ff00ff","#ff0000","#4c2b11","#3b3b3b","#000000"],
   colorShow: function (id, updateInput) {
 
@@ -333,7 +333,8 @@ mColorPicker = {
           'z-index':999998,
           'width':'194px',
           'height':'184px',
-          'font-size':'12px'
+          'font-size':'12px',
+          'font-family':'times'
         });
   
         $('.pastColor').css({
@@ -401,7 +402,8 @@ mColorPicker = {
           'font-size':' 18px',
           'color':'#000',
           'padding-left':' 4px',
-          'cursor':' pointer'
+          'cursor':' pointer',
+          'overflow': 'hidden'
         });
       }
   
