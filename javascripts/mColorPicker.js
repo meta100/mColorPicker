@@ -306,7 +306,7 @@ mColorPicker = {
         ).css(
           'display','none'
         ).html(
-          '<div id="mColorPickerWrapper"><div><img id="mColorPickerImg" src="' + mColorPicker.imageUrl + 'colorpicker.png"/></div><div><img id="mColorPickerImgGray" src="' + mColorPicker.imageUrl + 'graybar.jpg"/></div><div id="mColorPickerSwatches"><div id="cell0" class="pastColor">&nbsp;</div><div id="cell1" class="pastColor noLeftBorder">&nbsp;</div><div id="cell2" class="pastColor noLeftBorder">&nbsp;</div><div id="cell3" class="pastColor noLeftBorder">&nbsp;</div><div id="cell4" class="pastColor noLeftBorder">&nbsp;</div><div id="cell5" class="pastColor noLeftBorder">&nbsp;</div><div id="cell6" class="pastColor noLeftBorder">&nbsp;</div><div id="cell7" class="pastColor noLeftBorder">&nbsp;</div><div id="cell8" class="pastColor noLeftBorder">&nbsp;</div><div id="cell9" class="pastColor noLeftBorder">&nbsp;</div><div class="clear"></div></div><div id="mColorPickerFooter"><input type="text" size="8" id="mColorPickerInput"/><span id="mColorPickerTransparent">transparent</span></div></div>'
+          '<div id="mColorPickerWrapper"><div id="mColorPickerImg"></div><div id="mColorPickerImgGray"></div><div id="mColorPickerSwatches"><div id="cell0" class="pastColor">&nbsp;</div><div id="cell1" class="pastColor noLeftBorder">&nbsp;</div><div id="cell2" class="pastColor noLeftBorder">&nbsp;</div><div id="cell3" class="pastColor noLeftBorder">&nbsp;</div><div id="cell4" class="pastColor noLeftBorder">&nbsp;</div><div id="cell5" class="pastColor noLeftBorder">&nbsp;</div><div id="cell6" class="pastColor noLeftBorder">&nbsp;</div><div id="cell7" class="pastColor noLeftBorder">&nbsp;</div><div id="cell8" class="pastColor noLeftBorder">&nbsp;</div><div id="cell9" class="pastColor noLeftBorder">&nbsp;</div><div class="clear"></div></div><div id="mColorPickerFooter"><input type="text" size="8" id="mColorPickerInput"/><span id="mColorPickerTransparent">transparent</span></div></div>'
         ).appendTo("body");
   
         jQuery(document.createElement("div")).attr("id","mColorPickerBg").click(function() {
@@ -367,14 +367,16 @@ mColorPicker = {
           'height':'128px',
           'width':'192px',
           'border':'0',
-          'cursor':'crosshair'
+          'cursor':'crosshair',
+          'background-image':"url('" + mColorPicker.imageUrl + "colorpicker.png')"
         });
         
         jQuery('#mColorPickerImgGray').css({
           'height':'8px',
           'width':'192px',
           'border':'0',
-          'cursor':'crosshair'
+          'cursor':'crosshair',
+          'background-image':"url('" + mColorPicker.imageUrl + "graybar.jpg')"
         });
         
         jQuery('#mColorPickerInput').css({
