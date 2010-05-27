@@ -40,15 +40,15 @@ mColorPicker = {
   colorShow: function (id, updateInput) {
 
     var id2 = 'icp_' + id;
-        eICP = $("#" + id2).offset();
+        eICP = jQuery("#" + id2).offset();
   
-    $("#mColorPicker").css({
-      'top':(eICP.top + $("#" + id2).outerHeight()) + "px",
+    jQuery("#mColorPicker").css({
+      'top':(eICP.top + jQuery("#" + id2).outerHeight()) + "px",
       'left':(eICP.left) + "px",
       'position':'absolute'
     }).fadeIn("fast");
   
-    $("#mColorPickerBg").css({
+    jQuery("#mColorPickerBg").css({
       'position':'absolute',
       'top':0,
       'left':0,
@@ -56,19 +56,19 @@ mColorPicker = {
       'height':'100%'
     }).fadeIn("fast");
   
-    var def = $("#" + id).val();
+    var def = jQuery("#" + id).val();
   
-    $('#colorPreview span').text(def);
-    $('#colorPreview').css('background', def);
-    $('#color').val(def);
+    jQuery('#colorPreview span').text(def);
+    jQuery('#colorPreview').css('background', def);
+    jQuery('#color').val(def);
   
-    mColorPicker.current_color = $('#' + id).val();
-    mColorPicker.color = $('#' + id).css('background-color');
-    var hxs = $('#mColorPicker');
+    mColorPicker.current_color = jQuery('#' + id).val();
+    mColorPicker.color = jQuery('#' + id).css('background-color');
+    var hxs = jQuery('#mColorPicker');
   
-    $('#mColorPickerImg').unbind().mousemove(function(e) {
+    jQuery('#mColorPickerImg').unbind().mousemove(function(e) {
   
-      var offset = $('#mColorPickerImg').offset();
+      var offset = jQuery('#mColorPickerImg').offset();
   
       mColorPicker.color = mColorPicker.whichColor (e.pageX - offset.left, e.pageY - offset.top);
       mColorPicker.setInputColor(id, mColorPicker.color, updateInput);
@@ -80,9 +80,9 @@ mColorPicker = {
       mColorPicker.colorPicked(id, updateInput);
     });
   
-    $('#mColorPickerImgGray').unbind().mousemove(function(e) {
+    jQuery('#mColorPickerImgGray').unbind().mousemove(function(e) {
   
-      var offset = $('#mColorPickerImgGray').offset();
+      var offset = jQuery('#mColorPickerImgGray').offset();
   
       mColorPicker.color = mColorPicker.whichColor (e.pageX - offset.left, e.pageY - offset.top + 128);
       mColorPicker.setInputColor(id, mColorPicker.color, updateInput);
@@ -94,9 +94,9 @@ mColorPicker = {
       mColorPicker.colorPicked(id, updateInput);
     });
   
-    $('.pastColor').unbind().mousemove(function(e) {
+    jQuery('.pastColor').unbind().mousemove(function(e) {
   
-      mColorPicker.color = mColorPicker.toRGBHex($(this).css("background-color"));
+      mColorPicker.color = mColorPicker.toRGBHex(jQuery(this).css("background-color"));
       mColorPicker.setInputColor(id, mColorPicker.color, updateInput);
     }).bind('mouseleave', function (e) {
   
@@ -106,7 +106,7 @@ mColorPicker = {
       mColorPicker.colorPicked(id, updateInput);
     });
   
-    $('#mColorPickerTransparent').unbind().mouseover(function(e) {
+    jQuery('#mColorPickerTransparent').unbind().mouseover(function(e) {
   
       mColorPicker.color = 'transparent';
       mColorPicker.setInputColor(id, mColorPicker.color, updateInput);
@@ -118,9 +118,9 @@ mColorPicker = {
       mColorPicker.colorPicked(id, updateInput);
     });
   
-    $('#mColorPickerInput').unbind().bind('keyup', function (e) {
+    jQuery('#mColorPickerInput').unbind().bind('keyup', function (e) {
   
-      mColorPicker.color = $('#mColorPickerInput').val();
+      mColorPicker.color = jQuery('#mColorPickerInput').val();
       mColorPicker.setInputColor(id, mColorPicker.color, updateInput);
   
       if (e.which == 13) {
@@ -131,22 +131,22 @@ mColorPicker = {
       mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
     });
   
-    $('#mColorPickerSwatches').unbind().bind('mouseleave', function (e) {
+    jQuery('#mColorPickerSwatches').unbind().bind('mouseleave', function (e) {
   
       mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
     });
   
-    $('#mColorPickerFooter').unbind().bind('mouseleave', function (e) {
+    jQuery('#mColorPickerFooter').unbind().bind('mouseleave', function (e) {
   
       mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
     });
   
-    $('#mColorPickerWrapper').unbind().bind('mouseleave', function (e) {
+    jQuery('#mColorPickerWrapper').unbind().bind('mouseleave', function (e) {
   
       mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
     });
   
-    $('#mColorPicker').unbind().bind('mouseleave', function (e) {
+    jQuery('#mColorPicker').unbind().bind('mouseleave', function (e) {
   
       mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
     });
@@ -156,9 +156,9 @@ mColorPicker = {
     var image = (color == 'transparent')? "url('" + mColorPicker.imageUrl + "grid.gif')": '',
       textColor = (color == 'transparent')? "#000000": mColorPicker.textColor(color);
   
-    if (updateInput) $("#icp_" + id).css({'background-color': color, 'background-image': image});
-    $("#" + id).val(color).css({'background-color': color, 'background-image': image, 'color' : textColor});
-    $("#mColorPickerInput").val(color);
+    if (updateInput) jQuery("#icp_" + id).css({'background-color': color, 'background-image': image});
+    jQuery("#" + id).val(color).css({'background-color': color, 'background-image': image, 'color' : textColor});
+    jQuery("#mColorPickerInput").val(color);
   },
   textColor: function (val) {
   
@@ -187,24 +187,24 @@ mColorPicker = {
   
     mColorPicker.current_value = mColorPicker.current_color = mColorPicker.color;
   
-    $("#mColorPickerImg").unbind();
-    $("#mColorPickerImgGray").unbind();
-    $(".pastColor").unbind();
-    $("#mColorPickerBg").hide();
-    $("#mColorPicker").fadeOut();
+    jQuery("#mColorPickerImg").unbind();
+    jQuery("#mColorPickerImgGray").unbind();
+    jQuery(".pastColor").unbind();
+    jQuery("#mColorPickerBg").hide();
+    jQuery("#mColorPicker").fadeOut();
   
     if (mColorPicker.color != 'transparent') swatch[0] = mColorPicker.color;
   
-    $('.pastColor').each(function() {
+    jQuery('.pastColor').each(function() {
   
-      var color = mColorPicker.toRGBHex($(this).css('background-color'));
+      var color = mColorPicker.toRGBHex(jQuery(this).css('background-color'));
 
       if (color != swatch[0] && swatch.length < 10) {
   
         swatch[swatch.length] = color;
       }
   
-      $(this).css('background-color', swatch[i++])
+      jQuery(this).css('background-color', swatch[i++])
     });
   
     mColorPicker.set_cookie('swatches', swatch.join(','), 365);
@@ -294,14 +294,14 @@ mColorPicker = {
   },
   main: function() {
   
-    $('input').filter(function(index) {
+    jQuery('input').filter(function(index) {
   
       return this.getAttribute("type") == 'color';
     }).each(function (i) {
   
       if (i == 0) {
   
-        $(document.createElement("div")).attr(
+        jQuery(document.createElement("div")).attr(
           "id","mColorPicker"
         ).css(
           'display','none'
@@ -309,24 +309,24 @@ mColorPicker = {
           '<div id="mColorPickerWrapper"><div><img id="mColorPickerImg" src="' + mColorPicker.imageUrl + 'colorpicker.png"/></div><div><img id="mColorPickerImgGray" src="' + mColorPicker.imageUrl + 'graybar.jpg"/></div><div id="mColorPickerSwatches"><div id="cell0" class="pastColor">&nbsp;</div><div id="cell1" class="pastColor noLeftBorder">&nbsp;</div><div id="cell2" class="pastColor noLeftBorder">&nbsp;</div><div id="cell3" class="pastColor noLeftBorder">&nbsp;</div><div id="cell4" class="pastColor noLeftBorder">&nbsp;</div><div id="cell5" class="pastColor noLeftBorder">&nbsp;</div><div id="cell6" class="pastColor noLeftBorder">&nbsp;</div><div id="cell7" class="pastColor noLeftBorder">&nbsp;</div><div id="cell8" class="pastColor noLeftBorder">&nbsp;</div><div id="cell9" class="pastColor noLeftBorder">&nbsp;</div><div class="clear"></div></div><div id="mColorPickerFooter"><input type="text" size="8" id="mColorPickerInput"/><span id="mColorPickerTransparent">transparent</span></div></div>'
         ).appendTo("body");
   
-        $(document.createElement("div")).attr("id","mColorPickerBg").click(function() {
+        jQuery(document.createElement("div")).attr("id","mColorPickerBg").click(function() {
   
-          $("#mColorPickerBg").hide();
-          $("#mColorPicker").fadeOut()
+          jQuery("#mColorPickerBg").hide();
+          jQuery("#mColorPicker").fadeOut()
         }).appendTo("body");
   
-        $('table.pickerTable td').css({
+        jQuery('table.pickerTable td').css({
           'width':'12px',
           'height':'14px',
           'border':'1px solid #000',
           'cursor':'pointer'
         });
   
-        $('#mColorPicker table.pickerTable').css({
+        jQuery('#mColorPicker table.pickerTable').css({
           'border-collapse':'collapse'
         });
   
-        $('#mColorPicker').css({
+        jQuery('#mColorPicker').css({
           'border':'1px solid #ccc',
           'background':'#333',
           'color':'#fff',
@@ -337,68 +337,68 @@ mColorPicker = {
           'font-family':'times'
         });
   
-        $('.pastColor').css({
+        jQuery('.pastColor').css({
           'height':'18px',
           'width':'18px',
           'border':'1px solid #000',
           'float':'left'
         });
     
-        $('#colorPreview').css({
+        jQuery('#colorPreview').css({
           'height':'50px'
         });
     
-        $('.noLeftBorder').css({
+        jQuery('.noLeftBorder').css({
           'border-left':'0'
         });
     
-        $('.clear').css({
+        jQuery('.clear').css({
           'clear':'both'
         });
     
-        $('#mColorPickerWrapper').css({
+        jQuery('#mColorPickerWrapper').css({
           'position':'relative',
           'border':'solid 1px gray',
           'background-color':'white',
           'z-index':'999999'
         });
         
-        $('#mColorPickerImg').css({
+        jQuery('#mColorPickerImg').css({
           'height':'128px',
           'width':'192px',
           'border':'0',
           'cursor':'crosshair'
         });
         
-        $('#mColorPickerImgGray').css({
+        jQuery('#mColorPickerImgGray').css({
           'height':'8px',
           'width':'192px',
           'border':'0',
           'cursor':'crosshair'
         });
         
-        $('#mColorPickerInput').css({
+        jQuery('#mColorPickerInput').css({
           'border':'solid 1px gray',
           'font-size':'12pt',
           'margin':'1px'
         });
         
-        $('#mColorPickerImgGrid').css({
+        jQuery('#mColorPickerImgGrid').css({
           'border':'0',
           'height':'20px',
           'width':'20px',
           'vertical-align':'text-bottom'
         });
         
-        $('#mColorPickerSwatches').css({
+        jQuery('#mColorPickerSwatches').css({
           'background-color':'#000'
         });
         
-        $('#mColorPickerFooter').css({
+        jQuery('#mColorPickerFooter').css({
           'background-image':"url('" + mColorPicker.imageUrl + "grid.gif')"
         });
         
-        $('#mColorPickerTransparent').css({
+        jQuery('#mColorPickerTransparent').css({
           'font-size':' 18px',
           'color':'#000',
           'padding-left':' 4px',
@@ -407,34 +407,34 @@ mColorPicker = {
         });
       }
   
-      var id = $(this).attr('id'),
+      var id = jQuery(this).attr('id'),
           currentTime = new Date(),
           updateInput = false;
   
-      if (id == '') id = $(this).attr('name');
+      if (id == '') id = jQuery(this).attr('name');
       if (id == '') id = 'color_' + currentTime.getTime();
   
-      $(this).attr('id', id);
+      jQuery(this).attr('id', id);
   
-      if ($(this).attr('text') == 'hidden') {
+      if (jQuery(this).attr('text') == 'hidden') {
   
-        var color = $(this).val(),
-            width = ($(this).width() > 0)? $(this).width(): parseInt($(this).css('width'));
-            height = ($(this).height())? $(this).height(): parseInt($(this).css('height'));
-            flt = $(this).css('float'),
+        var color = jQuery(this).val(),
+            width = (jQuery(this).width() > 0)? jQuery(this).width(): parseInt(jQuery(this).css('width'));
+            height = (jQuery(this).height())? jQuery(this).height(): parseInt(jQuery(this).css('height'));
+            flt = jQuery(this).css('float'),
             image = (color == 'transparent')? "url('" + mColorPicker.imageUrl + "/grid.gif')": '',
             textColor = (color == 'transparent')? "#000000": mColorPicker.textColor(color),
             colorPicker = '';
     
-        $('body').append('<span id="color_work_area"></span>');
-        $('span#color_work_area').append($(this).clone(true));
-        colorPicker = $('span#color_work_area').html().replace(/type=[^a-z]*color[^a-z]*/gi, 'type="hidden"');
-        $('span#color_work_area').html('').remove();
-        $(this).after(
+        jQuery('body').append('<span id="color_work_area"></span>');
+        jQuery('span#color_work_area').append(jQuery(this).clone(true));
+        colorPicker = jQuery('span#color_work_area').html().replace(/type=[^a-z]*color[^a-z]*/gi, 'type="hidden"');
+        jQuery('span#color_work_area').html('').remove();
+        jQuery(this).after(
           '<span style="cursor:pointer;border:1px solid black;float:' + flt + ';width:' + width + 'px;height:' + height + 'px;" id="icp_' + id + '">&nbsp;</span>'
         ).after(colorPicker).remove();   
   
-        $('#icp_' + id).css({
+        jQuery('#icp_' + id).css({
           'background-color': color,
           'background-image': image,
           'display': 'inline-block',
@@ -444,19 +444,19 @@ mColorPicker = {
         updateInput = true;
       } else {
   
-        var color = $(this).val(),
-            id = $(this).attr('id'),
+        var color = jQuery(this).val(),
+            id = jQuery(this).attr('id'),
             image = (color == 'transparent')? "url('" + mColorPicker.imageUrl + "/grid.gif')": '',
             textColor = (color == 'transparent')? "#000000": mColorPicker.textColor(color),
             colorPicker = '';
     
-        $('body').append('<span id="color_work_area"></span>');
-        $('span#color_work_area').append($(this).clone(true));
-        colorPicker = $('span#color_work_area').html().replace(/type=[^a-z]*color[^a-z]*/gi, 'type="text"');
-        $('span#color_work_area').html('').remove();
-        $(this).after(colorPicker).remove();   
+        jQuery('body').append('<span id="color_work_area"></span>');
+        jQuery('span#color_work_area').append(jQuery(this).clone(true));
+        colorPicker = jQuery('span#color_work_area').html().replace(/type=[^a-z]*color[^a-z]*/gi, 'type="text"');
+        jQuery('span#color_work_area').html('').remove();
+        jQuery(this).after(colorPicker).remove();   
 
-        $('#' + id).css({
+        jQuery('#' + id).css({
           'background-color': color,
           'background-image': image,
           'color' : textColor
@@ -465,7 +465,7 @@ mColorPicker = {
         );
       }
   
-      $('#icp_' + id).bind('click', function () {
+      jQuery('#icp_' + id).bind('click', function () {
   
         mColorPicker.colorShow(id, updateInput);
       });
@@ -476,15 +476,15 @@ mColorPicker = {
       if (swatch == null) swatch = mColorPicker.swatches;
       else swatch = swatch.split(',');
   
-      $(".pastColor").each(function() {
+      jQuery(".pastColor").each(function() {
   
-        $(this).css('background-color', swatch[i++]);
+        jQuery(this).css('background-color', swatch[i++]);
       });
     });
   }
 };
 
-$(document).ready(function () {
+jQuery(document).ready(function () {
 
   mColorPicker.main();
 });
