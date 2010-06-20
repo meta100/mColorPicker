@@ -32,6 +32,7 @@
 */
 
 mColorPicker = {
+  show_logo: true,
   current_color: false,
   current_value: false,
   color: false,
@@ -62,8 +63,10 @@ mColorPicker = {
     jQuery('#colorPreview').css('background', def);
     jQuery('#color').val(def);
   
-    mColorPicker.current_color = jQuery('#' + id).val();
     mColorPicker.color = jQuery('#' + id).css('background-color');
+    mColorPicker.current_color = mColorPicker.toRGBHex(mColorPicker.color);
+    jQuery("#mColorPickerInput").val(mColorPicker.current_color);
+
     var hxs = jQuery('#mColorPicker');
   
     jQuery('#mColorPickerImg').unbind().mousemove(function(e) {
@@ -154,7 +157,7 @@ mColorPicker = {
   setInputColor: function (id, color, updateInput) {
   
     var image = (color == 'transparent')? "url('" + mColorPicker.imageUrl + "grid.gif')": '',
-      textColor = (color == 'transparent')? "#000000": mColorPicker.textColor(color);
+      textColor = mColorPicker.textColor(color);
   
     if (updateInput) jQuery("#icp_" + id).css({'background-color': color, 'background-image': image});
     jQuery("#" + id).val(color).css({'background-color': color, 'background-image': image, 'color' : textColor});
@@ -162,6 +165,8 @@ mColorPicker = {
   },
   textColor: function (val) {
   
+    if (val == 'transparent') return "black";
+    val = mColorPicker.toRGBHex(val);
     return (parseInt(val.substr(1, 2), 16) + parseInt(val.substr(3, 2), 16) + parseInt(val.substr(5, 2), 16) < 400)? 'white': 'black';
   },
   set_cookie: function (name, value, days) {
@@ -299,7 +304,7 @@ mColorPicker = {
       return this.getAttribute("type") == 'color';
     }).each(function (i) {
   
-      if (i == 0) {
+      if (jQuery("div#mColorPicker").length < 1) {
   
         jQuery(document.createElement("div")).attr(
           "id","mColorPicker"
@@ -314,7 +319,7 @@ mColorPicker = {
           jQuery("#mColorPickerBg").hide();
           jQuery("#mColorPicker").fadeOut()
         }).appendTo("body");
-  
+
         jQuery('table.pickerTable td').css({
           'width':'12px',
           'height':'14px',
@@ -381,8 +386,9 @@ mColorPicker = {
         
         jQuery('#mColorPickerInput').css({
           'border':'solid 1px gray',
-          'font-size':'12pt',
-          'margin':'1px'
+          'font-size':'10pt',
+          'margin':'3px',
+          'width':'80px'
         });
         
         jQuery('#mColorPickerImgGrid').css({
@@ -397,16 +403,19 @@ mColorPicker = {
         });
         
         jQuery('#mColorPickerFooter').css({
-          'background-image':"url('" + mColorPicker.imageUrl + "grid.gif')"
+          'background-image':"url('" + mColorPicker.imageUrl + "grid.gif')",
+          'height':'26px'
         });
         
         jQuery('#mColorPickerTransparent').css({
-          'font-size':' 18px',
+          'font-size':' 16px',
           'color':'#000',
           'padding-left':' 4px',
           'cursor':' pointer',
           'overflow': 'hidden'
         });
+
+        if (mColorPicker.show_logo) jQuery('#mColorPickerFooter').append('<a href="http://meta100.com/" title="Meta100 - Designing Fun" alt="Meta100 - Designing Fun" style="float:right;" target="_blank"><img src="' +  mColorPicker.imageUrl + 'meta100.png" title="Meta100 - Designing Fun" alt="Meta100 - Designing Fun" style="border:0;margin:5px 1px;"/></a>');
       }
   
       var id = jQuery(this).attr('id'),
@@ -414,7 +423,7 @@ mColorPicker = {
           updateInput = false;
   
       if (id == '') id = jQuery(this).attr('name');
-      if (id == '') id = 'color_' + currentTime.getTime();
+      if (id == '') id = 'color_' + (Math.random() * currentTime.getTime());
   
       jQuery(this).attr('id', id);
   
@@ -425,7 +434,6 @@ mColorPicker = {
             height = (jQuery(this).height())? jQuery(this).height(): parseInt(jQuery(this).css('height'));
             flt = jQuery(this).css('float'),
             image = (color == 'transparent')? "url('" + mColorPicker.imageUrl + "/grid.gif')": '',
-            textColor = (color == 'transparent')? "#000000": mColorPicker.textColor(color),
             colorPicker = '';
     
         jQuery('body').append('<span id="color_work_area"></span>');
@@ -439,17 +447,14 @@ mColorPicker = {
         jQuery('#icp_' + id).css({
           'background-color': color,
           'background-image': image,
-          'display': 'inline-block',
-          'color' : textColor
+          'display': 'inline-block'
         });
   
         updateInput = true;
       } else {
   
         var color = jQuery(this).val(),
-            id = jQuery(this).attr('id'),
             image = (color == 'transparent')? "url('" + mColorPicker.imageUrl + "/grid.gif')": '',
-            textColor = (color == 'transparent')? "#000000": mColorPicker.textColor(color),
             colorPicker = '';
     
         jQuery('body').append('<span id="color_work_area"></span>');
@@ -460,11 +465,12 @@ mColorPicker = {
 
         jQuery('#' + id).css({
           'background-color': color,
-          'background-image': image,
-          'color' : textColor
+          'background-image': image
+        }).css({
+          'color': mColorPicker.textColor(jQuery('#' + id).css('background-color'))
         }).after(
           '<span style="cursor:pointer;" id="icp_' + id + '"><img src="' + mColorPicker.imageUrl + 'color.png" style="border:0;margin:0 0 0 3px" align="absmiddle"></span>'
-        );
+        ).addClass('mColorPickerInput');
       }
   
       jQuery('#icp_' + id).bind('click', function () {
@@ -483,10 +489,25 @@ mColorPicker = {
         jQuery(this).css('background-color', swatch[i++]);
       });
     });
+  
+    jQuery('.mColorPickerInput').unbind().bind('keyup', function () {
+
+      jQuery(this).css({
+        'background-color': jQuery(this).val()
+      }).css({
+        'color': mColorPicker.textColor(jQuery(this).css('background-color'))
+      });
+    });
   }
 };
 
 jQuery(document).ready(function () {
 
   mColorPicker.main();
+
+  $(document).bind('ajaxSuccess', function () {
+
+    mColorPicker.main();
+  });
 });
+
