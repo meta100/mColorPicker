@@ -165,7 +165,7 @@ mColorPicker = {
   },
   textColor: function (val) {
   
-    if (val == 'transparent') return "black";
+    if (typeof val == 'undefined' || val == 'transparent') return "black";
     val = mColorPicker.toRGBHex(val);
     return (parseInt(val.substr(1, 2), 16) + parseInt(val.substr(3, 2), 16) + parseInt(val.substr(5, 2), 16) < 400)? 'white': 'black';
   },
@@ -281,6 +281,7 @@ mColorPicker = {
   },
   toRGBHex: function (num) {
   
+    if (typeof num == 'undefined') return '';
     if (num.indexOf('#') > -1) return num;
 
     var hexArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"],
@@ -423,7 +424,7 @@ mColorPicker = {
           updateInput = false;
   
       if (id == '') id = jQuery(this).attr('name');
-      if (id == '') id = 'color_' + (Math.random() * currentTime.getTime());
+      if (id == '') id = 'color_' + Math.round(Math.random() * currentTime.getTime());
   
       jQuery(this).attr('id', id);
   
@@ -506,9 +507,8 @@ jQuery(document).ready(function () {
 
   mColorPicker.main();
 
-  $(document).bind('ajaxSuccess', function () {
+  jQuery(document).bind('ajaxSuccess', function () {
 
     mColorPicker.main();
   });
 });
-
