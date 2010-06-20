@@ -1,6 +1,6 @@
 /*
   mColorPicker
-  Version: 1.0.0
+  Version: 1.0
   
   Copyright (c) 2010 Meta100 LLC.
   
@@ -430,8 +430,8 @@ mColorPicker = {
       if (jQuery(this).attr('text') == 'hidden') {
   
         var color = jQuery(this).val(),
-            width = (jQuery(this).width() > 0)? jQuery(this).width(): parseInt(jQuery(this).css('width'));
-            height = (jQuery(this).height())? jQuery(this).height(): parseInt(jQuery(this).css('height'));
+            width = (jQuery(this).width() > 0)? jQuery(this).width(): parseInt(jQuery(this).css('width')),
+            height = (jQuery(this).height())? jQuery(this).height(): parseInt(jQuery(this).css('height')),
             flt = jQuery(this).css('float'),
             image = (color == 'transparent')? "url('" + mColorPicker.imageUrl + "/grid.gif')": '',
             colorPicker = '';
@@ -478,7 +478,8 @@ mColorPicker = {
         mColorPicker.colorShow(id, updateInput);
       });
   
-      var swatch = mColorPicker.get_cookie('swatches'),
+      var swatch = mColorPicker.get_cookie('swatches');
+
       i = 0;
   
       if (swatch == null) swatch = mColorPicker.swatches;
