@@ -41,7 +41,8 @@ mColorPicker = {
   colorShow: function (id, updateInput) {
 
     var id2 = 'icp_' + id;
-        eICP = jQuery("#" + id2).offset();
+        eICP = jQuery("#" + id2).offset(),
+        hex = jQuery("#" + id).attr('hex');
   
     jQuery("#mColorPicker").css({
       'top':(eICP.top + jQuery("#" + id2).outerHeight()) + "px",
@@ -63,65 +64,32 @@ mColorPicker = {
     jQuery('#colorPreview').css('background', def);
     jQuery('#color').val(def);
   
-    mColorPicker.color = jQuery('#' + id).css('background-color');
-    mColorPicker.current_color = mColorPicker.toRGBHex(mColorPicker.color);
+    if (updateInput) mColorPicker.current_color = jQuery("#icp_" + id).css('background-color');
+    else mColorPicker.current_color = jQuery('#' + id).css('background-color');
+
+    if (hex == 'true') mColorPicker.current_color = mColorPicker.toRGBHex(mColorPicker.current_color);
+
     jQuery("#mColorPickerInput").val(mColorPicker.current_color);
 
     var hxs = jQuery('#mColorPicker');
   
-    jQuery('#mColorPickerImg').unbind().mousemove(function(e) {
+    jQuery('#mColorPickerImg, #mColorPickerImgGray, #mColorPickerTransparent, .pastColor').unbind().mousemove(function(e) {
   
-      var offset = jQuery('#mColorPickerImg').offset();
-  
-      mColorPicker.color = mColorPicker.whichColor (e.pageX - offset.left, e.pageY - offset.top);
+      var offset = jQuery(this).offset();
+
+      mColorPicker.color = jQuery(this).css("background-color");
+
+      if (jQuery(this).hasClass('pastColor') && hex == 'true') mColorPicker.color = mColorPicker.toRGBHex(mColorPicker.color);
+      else if (jQuery(this).attr('id') == 'mColorPickerTransparent') mColorPicker.color = 'transparent';
+      else if (!jQuery(this).hasClass('pastColor')) mColorPicker.color = mColorPicker.whichColor(e.pageX - offset.left, e.pageY - offset.top + ((jQuery(this).attr('id') == 'mColorPickerImgGray')? 128: 0), hex);
+
       mColorPicker.setInputColor(id, mColorPicker.color, updateInput);
-    }).bind('mouseleave', function (e) {
-  
-      mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
-    }).click(function(e) {
+    }).click(function() {
   
       mColorPicker.colorPicked(id, updateInput);
     });
   
-    jQuery('#mColorPickerImgGray').unbind().mousemove(function(e) {
-  
-      var offset = jQuery('#mColorPickerImgGray').offset();
-  
-      mColorPicker.color = mColorPicker.whichColor (e.pageX - offset.left, e.pageY - offset.top + 128);
-      mColorPicker.setInputColor(id, mColorPicker.color, updateInput);
-    }).bind('mouseleave', function (e) {
-  
-      mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
-    }).click(function(e) {
-  
-      mColorPicker.colorPicked(id, updateInput);
-    });
-  
-    jQuery('.pastColor').unbind().mousemove(function(e) {
-  
-      mColorPicker.color = mColorPicker.toRGBHex(jQuery(this).css("background-color"));
-      mColorPicker.setInputColor(id, mColorPicker.color, updateInput);
-    }).bind('mouseleave', function (e) {
-  
-      mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
-    }).click(function(e) {
-  
-      mColorPicker.colorPicked(id, updateInput);
-    });
-  
-    jQuery('#mColorPickerTransparent').unbind().mouseover(function(e) {
-  
-      mColorPicker.color = 'transparent';
-      mColorPicker.setInputColor(id, mColorPicker.color, updateInput);
-    }).bind('mouseleave', function (e) {
-  
-      mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
-    }).click(function(e) {
-  
-      mColorPicker.colorPicked(id, updateInput);
-    });
-  
-    jQuery('#mColorPickerInput').unbind().bind('keyup', function (e) {
+    jQuery('#mColorPickerInput').unbind().bind('keyup', function () {
   
       mColorPicker.color = jQuery('#mColorPickerInput').val();
       mColorPicker.setInputColor(id, mColorPicker.color, updateInput);
@@ -129,27 +97,12 @@ mColorPicker = {
       if (e.which == 13) {
         mColorPicker.colorPicked(id, updateInput);
       }
-    }).bind('blur', function (e) {
+    }).bind('blur', function () {
   
       mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
     });
   
-    jQuery('#mColorPickerSwatches').unbind().bind('mouseleave', function (e) {
-  
-      mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
-    });
-  
-    jQuery('#mColorPickerFooter').unbind().bind('mouseleave', function (e) {
-  
-      mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
-    });
-  
-    jQuery('#mColorPickerWrapper').unbind().bind('mouseleave', function (e) {
-  
-      mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
-    });
-  
-    jQuery('#mColorPicker').unbind().bind('mouseleave', function (e) {
+    jQuery('#mColorPickerSwatches, #mColorPickerFooter, #mColorPickerWrapper, #mColorPicker, #mColorPickerImg, #mColorPickerImgGray, .pastColor, #mColorPickerTransparent').unbind('mouseleave').bind('mouseleave', function (e) {
   
       mColorPicker.setInputColor(id, mColorPicker.current_color, updateInput);
     });
@@ -160,7 +113,7 @@ mColorPicker = {
       textColor = mColorPicker.textColor(color);
   
     if (updateInput) jQuery("#icp_" + id).css({'background-color': color, 'background-image': image});
-    jQuery("#" + id).val(color).css({'background-color': color, 'background-image': image, 'color' : textColor});
+    jQuery("#" + id).val(color).css({'background-color': color, 'background-image': image, 'color' : textColor}).trigger('change');
     jQuery("#mColorPickerInput").val(color);
   },
   textColor: function (val) {
@@ -202,9 +155,9 @@ mColorPicker = {
   
     jQuery('.pastColor').each(function() {
   
-      var color = mColorPicker.toRGBHex(jQuery(this).css('background-color'));
+      var color = jQuery(this).css('background-color');
 
-      if (color != swatch[0] && swatch.length < 10) {
+      if (color != swatch[0] && mColorPicker.toRGBHex(color) != swatch[0] && swatch.length < 10) {
   
         swatch[swatch.length] = color;
       }
@@ -212,9 +165,9 @@ mColorPicker = {
       jQuery(this).css('background-color', swatch[i++])
     });
   
-    mColorPicker.set_cookie('swatches', swatch.join(','), 365);
+    mColorPicker.set_cookie('swatches', swatch.join('||'), 365);
   },
-  whichColor: function(x,y){
+  whichColor: function(x, y, hex){
   
     var colorR = colorG = colorB = 256;
     
@@ -269,15 +222,20 @@ mColorPicker = {
     if (colorG >= 256) colorG = 255;
     if (colorB >= 256) colorB = 255;
     
-    colorR = colorR.toString(16);
-    colorG = colorG.toString(16);
-    colorB = colorB.toString(16);
+    if (hex == 'true') {
+
+      colorR = colorR.toString(16);
+      colorG = colorG.toString(16);
+      colorB = colorB.toString(16);
+      
+      if (colorR.length < 2) colorR = 0 + colorR;
+      if (colorG.length < 2) colorG = 0 + colorG;
+      if (colorB.length < 2) colorB = 0 + colorB;
+
+      return "#" + colorR + colorG + colorB;
+    }
     
-    if (colorR.length < 2) colorR = 0 + colorR;
-    if (colorG.length < 2) colorG = 0 + colorG;
-    if (colorB.length < 2) colorB = 0 + colorB;
-    
-    return "#" + colorR + colorG + colorB;
+    return "rgb(" + colorR + ', ' + colorG + ', ' + colorB + ')';
   },
   toRGBHex: function (num) {
   
@@ -312,7 +270,7 @@ mColorPicker = {
         ).css(
           'display','none'
         ).html(
-          '<div id="mColorPickerWrapper"><div id="mColorPickerImg"></div><div id="mColorPickerImgGray"></div><div id="mColorPickerSwatches"><div id="cell0" class="pastColor">&nbsp;</div><div id="cell1" class="pastColor noLeftBorder">&nbsp;</div><div id="cell2" class="pastColor noLeftBorder">&nbsp;</div><div id="cell3" class="pastColor noLeftBorder">&nbsp;</div><div id="cell4" class="pastColor noLeftBorder">&nbsp;</div><div id="cell5" class="pastColor noLeftBorder">&nbsp;</div><div id="cell6" class="pastColor noLeftBorder">&nbsp;</div><div id="cell7" class="pastColor noLeftBorder">&nbsp;</div><div id="cell8" class="pastColor noLeftBorder">&nbsp;</div><div id="cell9" class="pastColor noLeftBorder">&nbsp;</div><div class="clear"></div></div><div id="mColorPickerFooter"><input type="text" size="8" id="mColorPickerInput"/><span id="mColorPickerTransparent">transparent</span></div></div>'
+          '<div id="mColorPickerWrapper"><div id="mColorPickerImg"></div><div id="mColorPickerImgGray"></div><div id="mColorPickerSwatches"><div class="clear"></div></div><div id="mColorPickerFooter"><input type="text" size="8" id="mColorPickerInput"/><span id="mColorPickerTransparent">transparent</span></div></div>'
         ).appendTo("body");
   
         jQuery(document.createElement("div")).attr("id","mColorPickerBg").click(function() {
@@ -320,6 +278,16 @@ mColorPicker = {
           jQuery("#mColorPickerBg").hide();
           jQuery("#mColorPicker").fadeOut()
         }).appendTo("body");
+
+        for (n = 9; n > -1; n--) {
+
+          jQuery(document.createElement("div")).attr({
+            'id': 'cell' + n,
+            'class': "pastColor" + ((n > 0)? ' noLeftBorder': '')
+          }).html(
+            '&nbsp;'
+          ).prependTo("#mColorPickerSwatches");
+        }
 
         jQuery('table.pickerTable td').css({
           'width':'12px',
@@ -484,7 +452,7 @@ mColorPicker = {
       i = 0;
   
       if (swatch == null) swatch = mColorPicker.swatches;
-      else swatch = swatch.split(',');
+      else swatch = swatch.split('||');
   
       jQuery(".pastColor").each(function() {
   
