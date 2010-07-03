@@ -277,6 +277,17 @@ mColorPicker = {
   
           jQuery("#mColorPickerBg").hide();
           jQuery("#mColorPicker").fadeOut()
+        }).css({
+          'position': 'absolute',
+          'height': '100%',
+          'width': '100%',
+          'left': '0',
+          'right': '0',
+          'top': '0',
+          'bottom': '0',
+          'z-index':999990,
+          'background':'transparent',
+          'display': 'none'
         }).appendTo("body");
 
         for (n = 9; n > -1; n--) {
