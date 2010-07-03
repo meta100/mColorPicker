@@ -91,7 +91,7 @@ mColorPicker = {
       mColorPicker.colorPicked(id, updateInput);
     });
   
-    jQuery('#mColorPickerInput').unbind().bind('keyup', function () {
+    jQuery('#mColorPickerInput').unbind().bind('keyup', function (e) {
   
       mColorPicker.color = jQuery('#mColorPickerInput').val();
       mColorPicker.setInputColor(id, mColorPicker.color, updateInput);
@@ -167,6 +167,8 @@ mColorPicker = {
       jQuery(this).css('background-color', swatch[i++])
     });
   
+    jQuery("#" + id).trigger('colorpicked');
+
     mColorPicker.set_cookie('swatches', swatch.join('||'), 365);
   },
   whichColor: function(x, y, hex){
