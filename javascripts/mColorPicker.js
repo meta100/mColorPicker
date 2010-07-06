@@ -461,6 +461,8 @@ mColorPicker = {
       if (swatch == null) swatch = mColorPicker.swatches;
       else swatch = swatch.split('||');
   
+      if (swatch.length < 10) swatch = mColorPicker.swatches;
+
       jQuery(".pastColor").each(function() {
   
         jQuery(this).css('background-color', swatch[i++]);
