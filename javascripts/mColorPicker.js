@@ -379,6 +379,7 @@ mColorPicker = {
         
         jQuery('#mColorPickerFooter').css({
           'background-image':"url('" + mColorPicker.imageUrl + "grid.gif')",
+          'position': 'relative',
           'height':'26px'
         });
         
@@ -390,7 +391,7 @@ mColorPicker = {
           'overflow': 'hidden'
         });
 
-        if (mColorPicker.show_logo) jQuery('#mColorPickerFooter').append('<a href="http://meta100.com/" title="Meta100 - Designing Fun" alt="Meta100 - Designing Fun" style="float:right;" target="_blank"><img src="' +  mColorPicker.imageUrl + 'meta100.png" title="Meta100 - Designing Fun" alt="Meta100 - Designing Fun" style="border:0;margin:5px 1px;"/></a>');
+        if (mColorPicker.show_logo) jQuery('#mColorPickerFooter').prepend('<a href="http://meta100.com/" title="Meta100 - Designing Fun" alt="Meta100 - Designing Fun" style="float:right;" target="_blank"><img src="' +  mColorPicker.imageUrl + 'meta100.png" title="Meta100 - Designing Fun" alt="Meta100 - Designing Fun" style="border:0;top:5px;right:1px;position: absolute;"/></a>');
       }
   
       var id = jQuery(this).attr('id'),
