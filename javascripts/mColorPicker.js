@@ -42,7 +42,7 @@ mColorPicker = {
 
     var id2 = 'icp_' + id;
         eICP = jQuery("#" + id2).offset(),
-        hex = jQuery("#" + id).attr('hex');
+        hex = jQuery("#" + id).attr('data-hex') || jQuery("#" + id).attr('hex');
   
     jQuery("#mColorPicker").css({
       'top':(eICP.top + jQuery("#" + id2).outerHeight()) + "px",
