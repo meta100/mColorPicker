@@ -4,7 +4,7 @@
 		<title>mColorPicker</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <script charset="UTF-8" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="javascripts/mColorPicker.js"></script>
+    <script type="text/javascript" src="javascripts/mColorPicker.min.js"></script>
     <script type="text/javascript" charset="UTF-8">
       $(document).ready(function () {
 
@@ -21,6 +21,10 @@
 
           alert($(this).val());
         });
+        $('#green').bind('click', function () {
+
+          $.fn.mColorPicker.addToSwatch('#315F15');
+        });
       });
     </script>
 	</head>
@@ -34,6 +38,9 @@
       <br />
       <input type="color" name="color3" data-text="hidden" style="height:20px;width:20px;" value="#f7941d" class="color">
       <input type="color" name="color4" data-text="hidden" style="height:20px;width:20px;" value="#a36209" class="color">
+      <br />
+      <br />
+      <input id="green" type="button" value="Add Green to swatch." />
       <br />
       <br />
       <input type="submit" value="submit" />

@@ -1,6 +1,6 @@
 /*
   mColorPicker
-  Version: 1.0 r20
+  Version: 1.0 r21
   
   Copyright (c) 2010 Meta100 LLC.
   
@@ -275,7 +275,7 @@
 
     $(".mPastColor").each(function() {
 
-      $(this).css('background-color', swatch[i++]);
+      $(this).css('background-color', swatch[i++].toLowerCase());
     });
   };
 
@@ -409,20 +409,22 @@
     $("#" + id).trigger('colorpicked');
   };
 
-  $.fn.mColorPicker.addToSwatch = function () {
+  $.fn.mColorPicker.addToSwatch = function (color) {
   
-    var swatch = [],
+    var swatch = []
         i = 0;
+ 
+    if (typeof color == 'string') $.fn.mColorPicker.color = color.toLowerCase();
   
     $.fn.mColorPicker.currentValue = $.fn.mColorPicker.currentColor = $.fn.mColorPicker.color;
   
-    if ($.fn.mColorPicker.color != 'transparent') swatch[0] = $.fn.mColorPicker.color;
+    if ($.fn.mColorPicker.color != 'transparent') swatch[0] = $.fn.mColorPicker.color.toLowerCase();
   
     $('.mPastColor').each(function() {
   
-      $.fn.mColorPicker.color = $(this).css('background-color');
+      $.fn.mColorPicker.color = $(this).css('background-color').toLowerCase();
 
-      if ($.fn.mColorPicker.color != swatch[0] && $.fn.mColorPicker.RGBtoHex($.fn.mColorPicker.color) != swatch[0] && swatch.length < 10) swatch[swatch.length] = $.fn.mColorPicker.color;
+      if ($.fn.mColorPicker.color != swatch[0] && $.fn.mColorPicker.RGBtoHex($.fn.mColorPicker.color) != swatch[0] && $.fn.mColorPicker.hexToRGB($.fn.mColorPicker.color) != swatch[0] && swatch.length < 10) swatch[swatch.length] = $.fn.mColorPicker.color;
   
       $(this).css('background-color', swatch[i++])
     });
@@ -496,10 +498,17 @@
   };
 
   $.fn.mColorPicker.RGBtoHex = function (color) {
-  
+
+    color = color.toLowerCase();
+
     if (typeof color == 'undefined') return '';
-    if (color.indexOf('#') > -1) return color;
+    if (color.indexOf('#') > -1 && color.length > 6) return color;
     if (color.indexOf('rgb') < 0) return color;
+
+    if (color.indexOf('#') > -1) {
+
+      return '#' + color.substr(1, 1) + color.substr(1, 1) + color.substr(2, 1) + color.substr(2, 1) + color.substr(3, 1) + color.substr(3, 1);
+    }
 
     var hexArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"],
         decToHex = "#",
@@ -517,6 +526,8 @@
   };
 
   $.fn.mColorPicker.hexToRGB = function (color) {
+
+    color = color.toLowerCase();
   
     if (typeof color == 'undefined') return '';
     if (color.indexOf('rgb') > -1) return color;
