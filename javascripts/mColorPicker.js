@@ -1,6 +1,6 @@
 /*
   mColorPicker
-  Version: 1.0 r21
+  Version: 1.0 r22
   
   Copyright (c) 2010 Meta100 LLC.
   
@@ -110,7 +110,6 @@
         currentTime = new Date(),
         hidden = false;
 
-    if (id == '') id = $t.attr('name');
     if (id == '') id = 'color_' + Math.round(Math.random() * currentTime.getTime());
 
     $t.attr('id', id);
