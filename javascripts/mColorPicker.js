@@ -1,6 +1,6 @@
 /*
   mColorPicker
-  Version: 1.0 r22
+  Version: 1.0 r23
   
   Copyright (c) 2010 Meta100 LLC.
   
@@ -258,11 +258,7 @@
     if ($.fn.mColorPicker.init.allowTransparency) $('#mColorPickerFooter').prepend('<span id="mColorPickerTransparent" class="mColor" style="font-size:16px;color:#000;padding-right:30px;padding-top:3px;cursor:pointer;overflow:hidden;float:right;">transparent</span>');
     if ($.fn.mColorPicker.init.showLogo) $('#mColorPickerFooter').prepend('<a href="http://meta100.com/" title="Meta100 - Designing Fun" alt="Meta100 - Designing Fun" style="float:right;" target="_blank"><img src="' +  $o.imageFolder + 'meta100.png" title="Meta100 - Designing Fun" alt="Meta100 - Designing Fun" style="border:0;border-left:1px solid #aaa;right:0;position:absolute;"/></a>');
 
-    $("#mColorPickerBg").click(function() {
-
-      $("#mColorPickerBg").hide();
-      $("#mColorPicker").fadeOut()
-    });
+    $("#mColorPickerBg").click($.fn.mColorPicker.closePicker);
   
     var swatch = ($.fn.mColorPicker.init.enhancedSwatches)? $.fn.mColorPicker.getCookie('swatches'): $o.swatches,
         i = 0;
@@ -276,6 +272,13 @@
 
       $(this).css('background-color', swatch[i++].toLowerCase());
     });
+  };
+
+  $.fn.mColorPicker.closePicker = function () {
+
+    $(".mColor, .mPastColor, #mColorPickerInput, #mColorPickerWrapper").unbind();
+    $("#mColorPickerBg").hide();
+    $("#mColorPicker").fadeOut()
   };
 
   $.fn.mColorPicker.colorShow = function (id, updateInput) {
@@ -399,9 +402,7 @@
 
   $.fn.mColorPicker.colorPicked = function (id) {
   
-    $(".mColor, .mPastColor, #mColorPickerInput, #mColorPickerWrapper").unbind();
-    $("#mColorPickerBg").hide();
-    $("#mColorPicker").fadeOut();
+    $.fn.mColorPicker.closePicker();
   
     if ($.fn.mColorPicker.init.enhancedSwatches) $.fn.mColorPicker.addToSwatch();
   
@@ -539,9 +540,10 @@
     return 'rgb(' + parseInt(c.substr(0, 2), 16) + ', ' + parseInt(c.substr(2, 2), 16) + ', ' + parseInt(c.substr(4, 2), 16) + ')';
   }
 
-  if ($.fn.mColorPicker.init.replace == '[type=color]') {
 
-    $(document).ready(function () {
+  $(document).ready(function () {
+
+    if ($.fn.mColorPicker.init.replace == '[type=color]') {
 
       $('input').filter(function(index) {
     
@@ -555,17 +557,14 @@
           return this.getAttribute("type") == 'color';
         }).mColorPicker();
       });
-    });
-  } else if ($.fn.mColorPicker.init.replace) {
+    } else if ($.fn.mColorPicker.init.replace) {
 
-    $(document).ready(function () {
-    
       $('input' + $.fn.mColorPicker.init.replace).mColorPicker();
     
       $(document).bind('ajaxSuccess', function () {
       
         $('input' + $.fn.mColorPicker.init.replace).mColorPicker();
       });
-    });
-  }
+    }
+  });
 })(jQuery);
