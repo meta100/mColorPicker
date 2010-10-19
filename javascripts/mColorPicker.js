@@ -129,7 +129,7 @@
         width = ($t.width() > 0)? $t.width(): parseInt($t.css('width'), 10),
         height = ($t.height())? $t.height(): parseInt($t.css('height'), 10),
         flt = $t.css('float'),
-        image = (color == 'transparent')? "url('" + $o.imageFolder + "/grid.gif')": '',
+        image = (color == 'transparent')? "url('" + $o.imageFolder + "grid.gif')": '',
         colorPicker = '';
 
     $('body').append('<span id="color_work_area"></span>');
