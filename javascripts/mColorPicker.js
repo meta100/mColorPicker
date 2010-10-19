@@ -47,37 +47,45 @@
 // $.fn.mColorPicker.init.allowTransparency - Turn off transperancy as a color option.
 // $.fn.mColorPicker.init.showLogo - Turn on/off the meta100 logo (You don't really want to turn it off, do you?).
 
+
 (function($){
 
   $.fn.mColorPicker = function(options) {
-            
+
+    var attributeChangedEvent = 'DOMAttrModified';
+
+    if ($.browser.msie) $.fn.mColorPicker.attributeChangedEvent = 'propertychange';
+    else if ($.browser.webkit) $.fn.mColorPicker.attributeChangedEvent = 'DOMSubtreeModified';
+     
     $o = $.extend($.fn.mColorPicker.defaults, options);  
 
     if ($o.swatches.length < 10) $o.swatches = $.fn.mColorPicker.defaults.swatches
     if ($("div#mColorPicker").length < 1) $.fn.mColorPicker.drawPicker();
 
+    if ($('#css_disabled_color_picker').length < 1) $('head').append('<style id="css_disabled_color_picker" type="text/css">.mColorPicker[disabled] + span, .mColorPicker[disabled="disabled"] + span, .mColorPicker[disabled="true"] + span {filter:alpha(opacity=50);-moz-opacity:0.5;-webkit-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;}</style>');
+
     return this.each(function () {
 
-      var $this = $(this);
-      $.fn.mColorPicker.drawPickerTriggers($this);
-    });
-  
-    $('.mColorPickerInput').unbind().bind('keyup', function () {
+      var $t = $.fn.mColorPicker.drawPickerTriggers($(this));
 
-      try {
+      $t.unbind().bind('keyup', function () {
   
-        $(this).css({
-          'background-color': $(this).val()
-        }).css({
-          'color': $.fn.mColorPicker.textColor($(this).css('background-color'))
-        }).trigger('change');
-      } catch (r) {}
+        try {
+    
+          $(this).css({
+            'background-color': $(this).val()
+          }).css({
+            'color': $.fn.mColorPicker.textColor($(this).css('background-color'))
+          }).trigger('change');
+        } catch (r) {}
+      });
     });
   };
 
   $.fn.mColorPicker.currentColor = false;
   $.fn.mColorPicker.currentValue = false;
   $.fn.mColorPicker.color = false;
+  $.fn.mColorPicker.attributeChangedEvent = 'DOMAttrModified';
 
   $.fn.mColorPicker.init = {
     replace: '[type=color]',
@@ -155,6 +163,10 @@
 
       $.fn.mColorPicker.colorShow(id);
     }).data('mColorPicker', 'true');
+
+    $('#' + id).addClass('mColorPicker');
+
+    return $('#' + id);
   };
 
   $.fn.mColorPicker.drawPicker = function () {
@@ -292,6 +304,8 @@
         pickerLeft = pos.left,
         $d = $(document),
         $m = $("#mColorPicker");
+
+    if ($i.attr('disabled')) return false;
 
 		// KEEP COLOR PICKER IN VIEWPORT
 		if (pickerTop + $m.height() > $d.height()) pickerTop = pos.top - $m.height();
@@ -539,8 +553,7 @@
     if (c.length < 6) c = c.substr(0, 1) + c.substr(0, 1) + c.substr(1, 1) + c.substr(1, 1) + c.substr(2, 1) + c.substr(2, 1);
 
     return 'rgb(' + parseInt(c.substr(0, 2), 16) + ', ' + parseInt(c.substr(2, 2), 16) + ', ' + parseInt(c.substr(4, 2), 16) + ')';
-  }
-
+  };
 
   $(document).ready(function () {
 
