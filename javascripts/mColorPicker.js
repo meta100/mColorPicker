@@ -1,8 +1,9 @@
 /*
   mColorPicker
-  Version: 1.0 r24
+  Version: 1.0 r25
   
   Copyright (c) 2010 Meta100 LLC.
+  http://www.meta100.com/
   
   Permission is hereby granted, free of charge, to any person
   obtaining a copy of this software and associated documentation
@@ -62,7 +63,7 @@
     if ($o.swatches.length < 10) $o.swatches = $.fn.mColorPicker.defaults.swatches
     if ($("div#mColorPicker").length < 1) $.fn.mColorPicker.drawPicker();
 
-    if ($('#css_disabled_color_picker').length < 1) $('head').append('<style id="css_disabled_color_picker" type="text/css">.mColorPicker[disabled] + span, .mColorPicker[disabled="disabled"] + span, .mColorPicker[disabled="true"] + span {filter:alpha(opacity=50);-moz-opacity:0.5;-webkit-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;}</style>');
+    if ($('#css_disabled_color_picker').length < 1) $('head').prepend('<style id="css_disabled_color_picker" type="text/css">.mColorPicker[disabled] + span, .mColorPicker[disabled="disabled"] + span, .mColorPicker[disabled="true"] + span {filter:alpha(opacity=50);-moz-opacity:0.5;-webkit-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;}</style>');
 
     return this.each(function () {
 
