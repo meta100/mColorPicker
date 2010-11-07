@@ -1,6 +1,6 @@
 /*
   mColorPicker
-  Version: 1.0 r25
+  Version: 1.0 r26
   
   Copyright (c) 2010 Meta100 LLC.
   http://www.meta100.com/
@@ -147,7 +147,7 @@
         'background-color': color,
         'background-image': image,
         'display': 'inline-block'
-      });
+      }).attr('class', $('#' + id).attr('class'));
     } else {
 
       $('#' + id).css({
@@ -366,9 +366,7 @@
         $.fn.mColorPicker.color = $('#mColorPickerInput').val();
         $.fn.mColorPicker.setInputColor(id, $.fn.mColorPicker.color);
     
-        if (e.which == 13) {
-          $.fn.mColorPicker.colorPicked(id);
-        }
+        if (e.which == 13) $.fn.mColorPicker.colorPicked(id);
       } catch (r) {}
     }).bind('blur', function () {
   
