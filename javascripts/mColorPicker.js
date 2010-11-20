@@ -274,13 +274,11 @@
 
     $("#mColorPickerBg").click($.fn.mColorPicker.closePicker);
   
-    var swatch = ($.fn.mColorPicker.init.enhancedSwatches)? $.fn.mColorPicker.getCookie('swatches'): $o.swatches,
+    var swatch = $.fn.mColorPicker.getCookie('swatches'),
         i = 0;
 
-    if (swatch == null) swatch = $o.swatches;
-    else swatch = swatch.split('||');
-
-    if (swatch.length < 10) swatch = $o.swatches;
+    if (typeof swatch == 'string') swatch = swatch.split('||');
+    if (swatch == null || $.fn.mColorPicker.init.enhancedSwatches || swatch.length < 10) swatch = $o.swatches;
 
     $(".mPastColor").each(function() {
 
