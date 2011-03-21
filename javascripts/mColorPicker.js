@@ -30,8 +30,7 @@
     $o = $.extend($.fn.mColorPicker.defaults, options);  
 
     // Add trailing slash to imageFolder if needed:
-    if ($o.imageFolder.charAt(-1) != '/') $o.imageFolder = $o.imageFolder + "/";
-    console.log($o.imageFolder);
+    if ($o.imageFolder.charAt($o.imageFolder.size) != '/') $o.imageFolder = $o.imageFolder + '/';
 
     if ($o.swatches.length < 10) $o.swatches = $.fn.mColorPicker.defaults.swatches
     if ($("div#mColorPicker").length < 1) $.fn.mColorPicker.drawPicker();
@@ -546,17 +545,4 @@
 
     return 'rgb(' + parseInt(c.substr(0, 2), 16) + ', ' + parseInt(c.substr(2, 2), 16) + ', ' + parseInt(c.substr(4, 2), 16) + ')';
   };
-
-  //$(document).ready(function () {
-
-    //if ($.fn.mColorPicker.init.replace) {
-
-      //$('input[data-mcolorpicker!="true"]').filter(function() {
-    
-        //return ($.fn.mColorPicker.init.replace == '[type=color]')? this.getAttribute("type") == 'color': $(this).is($.fn.mColorPicker.init.replace);
-      //}).mColorPicker();
-
-      //$.fn.mColorPicker.liveEvents();
-    //}
-  //});
 })(jQuery);
