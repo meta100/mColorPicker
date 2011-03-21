@@ -1,0 +1,36 @@
+h1. mColorPicker
+
+Version: 1.0 r35
+
+Copyright (c) 2010 Meta100 LLC.
+http://www.meta100.com/
+
+Licensed under the MIT license 
+http://www.opensource.org/licenses/mit-license.php 
+
+h2. Usage
+
+<pre>$('input.foo').mColorPicker({
+  hex: true,
+  imageFolder: '/where/should/go'
+})</pre>
+
+Options:
+
+* *imageFolder* - Change to move image location. Defaults to <pre>images/</pre>
+* *swatches* - Initial colors in the swatch, must an array of 10 colors.
+* *hex* - true or false. Defaults to <pre>false</pre>.
+
+You can call these before applying it to an object for other options
+
+* *$.fn.mColorPicker.init.enhancedSwatches* - Turn of saving and loading of swatch to cookies.
+* *$.fn.mColorPicker.init.allowTransparency* - Turn off transperancy as a color option.
+* *$.fn.mColorPicker.init.showLogo* - Turn on/off the meta100 logo (You don't really want to turn it off, do you?).
+
+h2. What the fork?
+
+I forked this to change the following:
+
+* remove auto application of color picker. It caused a problem when trying to change the imageFolder - the CSS images were still looking in the default folder.
+* added the hex option
+* doesn't blow up if there's no trailing slash in the imageFolder option

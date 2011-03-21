@@ -1,6 +1,6 @@
 /*
   mColorPicker
-  Version: 1.0 r34
+  Version: 1.0 r35
   
   Copyright (c) 2010 Meta100 LLC.
   http://www.meta100.com/
@@ -10,16 +10,12 @@
 */
 
 // After this script loads set:
-// $.fn.mColorPicker.init.replace = '.myclass'
-// to have this script apply to input.myclass,
-// instead of the default input[type=color]
-// To turn of automatic operation and run manually set:
-// $.fn.mColorPicker.init.replace = false
 // To use manually call like any other jQuery plugin
 // $('input.foo').mColorPicker({options})
 // options:
 // imageFolder - Change to move image location.
 // swatches - Initial colors in the swatch, must an array of 10 colors.
+// hex - true or false
 // init:
 // $.fn.mColorPicker.init.enhancedSwatches - Turn of saving and loading of swatch to cookies.
 // $.fn.mColorPicker.init.allowTransparency - Turn off transperancy as a color option.
@@ -32,6 +28,10 @@
   $.fn.mColorPicker = function(options) {
 
     $o = $.extend($.fn.mColorPicker.defaults, options);  
+
+    // Add trailing slash to imageFolder if needed:
+    if ($o.imageFolder.charAt(-1) != '/') $o.imageFolder = $o.imageFolder + "/";
+    console.log($o.imageFolder);
 
     if ($o.swatches.length < 10) $o.swatches = $.fn.mColorPicker.defaults.swatches
     if ($("div#mColorPicker").length < 1) $.fn.mColorPicker.drawPicker();
@@ -231,7 +231,7 @@
       'cursor':'crosshair',
       'background-image':"url('" + $o.imageFolder + "colorpicker.png')"
     });
-    
+
     $('#mColorPickerImgGray').css({
       'height':'8px',
       'width':'192px',
@@ -289,11 +289,10 @@
   };
 
   $.fn.mColorPicker.colorShow = function (id) {
-
     var $e = $("#icp_" + id);
         pos = $e.offset(),
         $i = $("#" + id);
-        hex = $i.attr('data-hex') || $i.attr('hex'),
+        hex = $i.attr('data-hex') == 'true' || $i.attr('hex') == 'true' || $o.hex,
         pickerTop = pos.top + $e.outerHeight(),
         pickerLeft = pos.left,
         $d = $(document),
@@ -331,7 +330,7 @@
     if ($('#' + id).attr('data-text')) $.fn.mColorPicker.currentColor = $e.css('background-color');
     else $.fn.mColorPicker.currentColor = $i.css('background-color');
 
-    if (hex == 'true') $.fn.mColorPicker.currentColor = $.fn.mColorPicker.RGBtoHex($.fn.mColorPicker.currentColor);
+    if (hex) $.fn.mColorPicker.currentColor = $.fn.mColorPicker.RGBtoHex($.fn.mColorPicker.currentColor);
 
     $("#mColorPickerInput").val($.fn.mColorPicker.currentColor);
   
@@ -341,8 +340,8 @@
 
       $.fn.mColorPicker.color = $(this).css("background-color");
 
-      if ($(this).hasClass('mPastColor') && hex == 'true') $.fn.mColorPicker.color = $.fn.mColorPicker.RGBtoHex($.fn.mColorPicker.color);
-      else if ($(this).hasClass('mPastColor') && hex != 'true') $.fn.mColorPicker.color = $.fn.mColorPicker.hexToRGB($.fn.mColorPicker.color);
+      if ($(this).hasClass('mPastColor') && hex) $.fn.mColorPicker.color = $.fn.mColorPicker.RGBtoHex($.fn.mColorPicker.color);
+      else if ($(this).hasClass('mPastColor') && !hex) $.fn.mColorPicker.color = $.fn.mColorPicker.hexToRGB($.fn.mColorPicker.color);
       else if ($(this).attr('id') == 'mColorPickerTransparent') $.fn.mColorPicker.color = 'transparent';
       else if (!$(this).hasClass('mPastColor')) $.fn.mColorPicker.color = $.fn.mColorPicker.whichColor(e.pageX - offset.left, e.pageY - offset.top + (($(this).attr('id') == 'mColorPickerImgGray')? 128: 0), hex);
 
@@ -489,7 +488,7 @@
     colorG = Math.round(Math.min(colorG, 255));
     colorB = Math.round(Math.min(colorB, 255));
 
-    if (hex == 'true') {
+    if (hex) {
 
       colorR = colorR.toString(16);
       colorG = colorG.toString(16);
@@ -548,16 +547,16 @@
     return 'rgb(' + parseInt(c.substr(0, 2), 16) + ', ' + parseInt(c.substr(2, 2), 16) + ', ' + parseInt(c.substr(4, 2), 16) + ')';
   };
 
-  $(document).ready(function () {
+  //$(document).ready(function () {
 
-    if ($.fn.mColorPicker.init.replace) {
+    //if ($.fn.mColorPicker.init.replace) {
 
-      $('input[data-mcolorpicker!="true"]').filter(function() {
+      //$('input[data-mcolorpicker!="true"]').filter(function() {
     
-        return ($.fn.mColorPicker.init.replace == '[type=color]')? this.getAttribute("type") == 'color': $(this).is($.fn.mColorPicker.init.replace);
-      }).mColorPicker();
+        //return ($.fn.mColorPicker.init.replace == '[type=color]')? this.getAttribute("type") == 'color': $(this).is($.fn.mColorPicker.init.replace);
+      //}).mColorPicker();
 
-      $.fn.mColorPicker.liveEvents();
-    }
-  });
+      //$.fn.mColorPicker.liveEvents();
+    //}
+  //});
 })(jQuery);
