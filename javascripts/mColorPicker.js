@@ -142,9 +142,7 @@
         'background-image': image,
         'display': 'inline-block'
       }).attr(
-        'class', $('#' + id).attr('class')
-      ).addClass(
-        'mColorPickerTrigger'
+        'class', $('#' + id).attr('class') + 'mColorPickerTrigger'
       );
     } else {
 
