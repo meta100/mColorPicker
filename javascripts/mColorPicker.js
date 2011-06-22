@@ -1,6 +1,6 @@
 /*
   mColorPicker
-  Version: 1.0 r34
+  Version: 1.0 r35
   
   Copyright (c) 2010 Meta100 LLC.
   http://www.meta100.com/
@@ -142,9 +142,7 @@
         'background-image': image,
         'display': 'inline-block'
       }).attr(
-        'class', $('#' + id).attr('class')
-      ).addClass(
-        'mColorPickerTrigger'
+        'class', ($('#' + id).attr('class') || '') + ' mColorPickerTrigger'
       );
     } else {
 
