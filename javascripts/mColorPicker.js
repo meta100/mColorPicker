@@ -137,13 +137,17 @@
 
     if (hidden) {
 
+      if($('#' + id).prop('class')){
+	      $('#icp_' + id).prop(
+	        'class', $('#' + id).prop('class')
+	      );
+      }
+
       $('#icp_' + id).css({
         'background-color': color,
         'background-image': image,
         'display': 'inline-block'
-      }).attr(
-        'class', $('#' + id).attr('class')
-      ).addClass(
+      }).addClass(
         'mColorPickerTrigger'
       );
     } else {
@@ -378,7 +382,7 @@
     var image = (color == 'transparent')? "url('" + $o.imageFolder + "grid.gif')": '',
         textColor = $.fn.mColorPicker.textColor(color);
   
-    if ($('#' + id).attr('data-text') || $('#' + id).attr('text')) $("#icp_" + id).css({'background-color': color, 'background-image': image});
+    if ($('#' + id).attr('data-text') || $('#' + id).prop('text')) $("#icp_" + id).css({'background-color': color, 'background-image': image});
     $("#" + id).val(color).css({'background-color': color, 'background-image': image, 'color' : textColor}).trigger('change');
     $("#mColorPickerInput").val(color);
   };
@@ -413,8 +417,8 @@
     $.fn.mColorPicker.closePicker();
   
     if ($.fn.mColorPicker.init.enhancedSwatches) $.fn.mColorPicker.addToSwatch();
-  
-    $("#" + id).trigger('colorpicked');
+  	
+    $("#" + id).trigger('colorpicked', [id, $('#mColorPickerInput').val()]);
   };
 
   $.fn.mColorPicker.addToSwatch = function (color) {
