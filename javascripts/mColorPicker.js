@@ -135,6 +135,8 @@
       (hidden)? '<span style="cursor:pointer;border:1px solid black;float:' + flt + ';width:' + width + 'px;height:' + height + 'px;" id="icp_' + id + '">&nbsp;</span>': ''
     ).after(colorPicker).remove();   
 
+    $("#" + id).val(color);
+
     if (hidden) {
 
       $('#icp_' + id).css({
