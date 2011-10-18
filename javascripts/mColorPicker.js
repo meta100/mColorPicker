@@ -1,6 +1,6 @@
 /*
   mColorPicker
-  Version: 1.0 r35
+  Version: 1.0 r36
   
   Copyright (c) 2010 Meta100 LLC.
   http://www.meta100.com/
@@ -37,23 +37,6 @@
     if ($("div#mColorPicker").length < 1) $.fn.mColorPicker.drawPicker();
 
     if ($('#css_disabled_color_picker').length < 1) $('head').prepend('<style id="css_disabled_color_picker" type="text/css">.mColorPicker[disabled] + span, .mColorPicker[disabled="disabled"] + span, .mColorPicker[disabled="true"] + span {filter:alpha(opacity=50);-moz-opacity:0.5;-webkit-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;}</style>');
-
-    $('.mColorPicker').live('keyup', function () {
-
-      try {
-  
-        $(this).css({
-          'background-color': $(this).val()
-        }).css({
-          'color': $.fn.mColorPicker.textColor($(this).css('background-color'))
-        }).trigger('change');
-      } catch (r) {}
-    });
-
-    $('.mColorPickerTrigger').live('click', function () {
-
-      $.fn.mColorPicker.colorShow($(this).attr('id').replace('icp_', ''));
-    });
 
     this.each(function () {
 
@@ -559,5 +542,22 @@
 
       $.fn.mColorPicker.liveEvents();
     }
+
+    $('.mColorPicker').live('keyup', function () {
+
+      try {
+  
+        $(this).css({
+          'background-color': $(this).val()
+        }).css({
+          'color': $.fn.mColorPicker.textColor($(this).css('background-color'))
+        }).trigger('change');
+      } catch (r) {}
+    });
+
+    $('.mColorPickerTrigger').live('click', function () {
+
+      $.fn.mColorPicker.colorShow($(this).attr('id').replace('icp_', ''));
+    });
   });
 })(jQuery);
