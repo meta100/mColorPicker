@@ -183,11 +183,11 @@
     }).insertAfter($t)
     
     $(img).attr({
-      'src': $o.imageFolder + 'color.png',
-      'vertical-align': 'middle'
+      'src': $o.imageFolder + 'color.png'
     }).css({
       'border': 0,
-      'margin': '1px 0 0 3px'
+      'margin': '1px 0 0 3px',
+      'vertical-align': 'middle'
     }).appendTo($trigger);
 
     $c.append($t);
