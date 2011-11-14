@@ -184,7 +184,7 @@
     
     $(img).attr({
       'src': $o.imageFolder + 'color.png',
-      'align': 'top'
+      'vertical-align': 'middle'
     }).css({
       'border': 0,
       'margin': '1px 0 0 3px'
