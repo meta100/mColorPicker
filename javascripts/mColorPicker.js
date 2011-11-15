@@ -1,6 +1,6 @@
 /*
   mColorPicker
-  Version: 1.0 r37
+  Version: 1.0 r38
   
   Copyright (c) 2010 Meta100 LLC.
   http://www.meta100.com/
@@ -43,10 +43,12 @@
 
   $.fn.mColorPicker = function(options) {
 
+    var swatches = $.fn.mColorPicker.getCookie('swatches');
+
     $o = $.extend($.fn.mColorPicker.defaults, options);
     $.fn.mColorPicker.defaults.swatches.concat($o.swatches).slice(-10);
 
-    if ($i.enhancedSwatches) $o.swatches = $.fn.mColorPicker.getCookie('swatches').split('||').concat($o.swatches).slice(0, 10);
+    if ($i.enhancedSwatches && swatches) $o.swatches = swatches.split('||').concat($o.swatches).slice(0, 10) || $o.swatches;
 
     if (!$("div#mColorPicker").length) $.fn.mColorPicker.drawPicker();
     if (!$('#css_disabled_color_picker').length) $('head').prepend('<meta data-remove-me="true"/><style id="css_disabled_color_picker" type="text/css">.mColorPicker[disabled] + span, .mColorPicker[disabled="disabled"] + span, .mColorPicker[disabled="true"] + span {filter:alpha(opacity=50);-moz-opacity:0.5;-webkit-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;cursor:default;}</style>');
