@@ -1,6 +1,6 @@
 /*
   mColorPicker
-  Version: 1.0 r38
+  Version: 1.0 r39
   
   Copyright (c) 2010 Meta100 LLC.
   http://www.meta100.com/
@@ -153,7 +153,9 @@
   
       if (!$o.changeColor) return false;
 
-      $o.currentInput.mSetInputColor($o.currentColor);
+      var $e = $o.currentInput; 
+
+      $o.currentInput.mSetInputColor($.fn.mColorPicker.setColor($o.currentColor, ($e.attr('data-hex') || $e.attr('hex'))));
     });
   };
 
@@ -193,7 +195,7 @@
     }).appendTo($trigger);
 
     $c.append($t);
-    colorPicker = $c.html().replace(/type="color"/gi, 'type="' + (hidden? 'hidden': 'text') + '"');
+    colorPicker = $c.html().replace(/type=[^a-z ]*color[^a-z //>]*/gi, 'type="' + (hidden? 'hidden': 'text') + '"');
     $c.html('').remove();
     $e = $(colorPicker).attr('id', id).addClass('mColorPicker').val(color).insertBefore($trigger);
 
@@ -459,19 +461,18 @@
     var swatch = []
         i = 0;
  
-    if (typeof color == 'string') $o.color = color.toLowerCase();
-  
-    if ($o.color != 'transparent') swatch[0] = $o.color.toLowerCase();
+    if (typeof color == 'string') $o.color = color;
+    if ($o.color != 'transparent') swatch[0] = $.fn.mColorPicker.hexToRGB($o.color);
   
     $('.mPastColor').each(function() {
   
       var $t = $(this);
 
-      $o.color = $t.css('background-color').toLowerCase();
+      $o.color = $.fn.mColorPicker.hexToRGB($t.css('background-color'));
 
-      if ($o.color != swatch[0] && $.fn.mColorPicker.RGBtoHex($o.color) != swatch[0] && $.fn.mColorPicker.hexToRGB($o.color) != swatch[0] && swatch.length < 10) swatch[swatch.length] = $o.color;
+      if ($o.color != swatch[0] && swatch.length < 10) swatch[swatch.length] = $o.color;
   
-      $(this).css('background-color', swatch[i++])
+      $t.css('background-color', swatch[i++])
     });
 
     if ($i.enhancedSwatches) $.fn.mColorPicker.setCookie('swatches', swatch.join('||'), 365);
@@ -594,10 +595,17 @@
 
     if ($i.replace) {
 
-      $.fn.mColorPicker.start();
-
-      if (typeof $.fn.livequery == "function") $($i.replace).livequery($.fn.mColorPicker.start);
-      else $(document).live('ajaxSuccess.mColorPicker', $.fn.mColorPicker.start);
+      if (typeof $.fn.mDOMupdate == "function") {
+  
+        $('input').mDOMupdate($.fn.mColorPicker.start);
+      } else if (typeof $.fn.livequery == "function") {
+  
+        $('input').livequery($.fn.mColorPicker.start);
+      } else {
+  
+        $.fn.mColorPicker.start();
+        $document.live('ajaxSuccess.mColorPicker', $.fn.mColorPicker.start);
+      }
     }
   });
 })(jQuery);
