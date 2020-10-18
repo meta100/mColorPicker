@@ -146,7 +146,9 @@
 
     }).live('blur', function () {
   
-      $o.currentInput.mSetInputColor($o.color);
+      var $e = $o.currentInput;
+      
+      $e.mSetInputColor($.fn.mColorPicker.setColor($o.color, ($e.attr('data-hex') || $e.attr('hex'))));
     });
   
     $('#mColorPickerWrapper').live('mouseleave', function () {
